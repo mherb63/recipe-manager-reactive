@@ -29,10 +29,12 @@ public class RecipeService {
     }
 
     public Flux<Recipe> findByContributorName(String contributor) {
+        log.info("Received request to find Recipe with contributor : {}", contributor);
         return recipeRepository.findByContributorName(contributor);
     }
 
     public Flux<Recipe> findByTitle(String title) {
+        log.info("Received request to find Recipe with title : {}", title);
         return recipeRepository.findByTitle(title);
     }
 
@@ -53,7 +55,7 @@ public class RecipeService {
 
         return recipeRepository.findById(recipe.getId()).switchIfEmpty(Mono.error(new RecipeNotFoundException("Could not find Recipe with id: " + recipe.getId())))
                 .map(r -> recipe)
-                .flatMap(recipeRepository :: save);
+                .flatMap(recipeRepository::save);
     }
 
     public void deleteRecipe(String id) {
