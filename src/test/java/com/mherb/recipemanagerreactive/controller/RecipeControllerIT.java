@@ -71,4 +71,14 @@ public class RecipeControllerIT {
 
         Mockito.verify(repository, times(1)).findById("1001");
     }
+
+    @Test
+    void testDeleteRecipe() {
+        Mono<Void> voidReturn  = Mono.empty();
+        Mockito.when(repository.deleteById("1001")).thenReturn(voidReturn);
+
+        webClient.delete().uri("/recipes/{id}", "1001")
+                .exchange()
+                .expectStatus().isNoContent();
+    }
 }
