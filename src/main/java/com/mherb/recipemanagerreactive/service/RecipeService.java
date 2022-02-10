@@ -58,8 +58,12 @@ public class RecipeService {
                 .flatMap(recipeRepository::save);
     }
 
-    public void deleteRecipe(String id) {
+    public Mono<Void> deleteRecipe(String id) {
         log.info("Received request to delete Recipe with id: {}", id);
-        recipeRepository.deleteById(id);
+
+        return recipeRepository.deleteById(id);
+
+//        recipeRepository.findById(id).switchIfEmpty(Mono.error(new RecipeNotFoundException("Could not find Recipe with id: " + id)))
+//                .flatMap(recipeRepository::delete);
     }
 }

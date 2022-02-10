@@ -43,8 +43,8 @@ public class RecipeController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteRecipe(@PathVariable String id) {
-         recipeService.deleteRecipe(id);
+    public Mono<Void> deleteRecipe(@PathVariable String id) {
+         return recipeService.deleteRecipe(id);
     }
 
     @PostMapping
